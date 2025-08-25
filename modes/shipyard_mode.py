@@ -11,3 +11,8 @@ class ShipyardMode(Mode):
 
     def disable(self):
         globvars.shipyard_menu.hide()
+        
+        
+    def onEvent(self, event):
+        if event.type == KEYDOWN and event.key == K_RETURN:
+            setMode(globvars.fly_mode)

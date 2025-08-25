@@ -6,10 +6,10 @@ from gui.gui import *
 from gui.messenger import *
 from gui.shipyard_menu import *
 from view.screen import *
-from carrier import *
+from game.carrier import *
 from view.sky import *
-from planets import *
-from shipyard import *
+from game.planets import *
+from game.shipyard import *
 from clock import *
 
 def main():
@@ -29,7 +29,7 @@ def main():
     globvars.player     = start_ship
     globvars.spaceships.append(start_ship)
 
-    globvars.shipyard = Shipyard()
+    globvars.shipyards.append(Shipyard())
 
     globvars.cargos = createCargoArray()
 
@@ -37,7 +37,7 @@ def main():
     globvars.scene.addSprite(sky)
     createPlanetsWithDocks()
     createAsteroids()
-    globvars.scene.addSprite(globvars.shipyard)
+    globvars.scene.addSprites(globvars.shipyards)
     globvars.scene.addSprite(globvars.player)
 
     globvars.fly_mode   = FlyMode()
@@ -58,6 +58,7 @@ def main():
 
     # Game loop:
     game_clock = Clock()
+    globvars.clock = game_clock
     pygame_clock = pygame.time.Clock()
     done = False
     while not done:
@@ -77,6 +78,7 @@ def main():
         globvars.mode.update()
 
         # Draw:
+        globvars.surface.fill((0,0,0))
         globvars.viewport.draw()
         globvars.mode.draw()
         globvars.gui.draw()
@@ -90,4 +92,7 @@ def main():
 
      
 if __name__ == "__main__":
+    import tests
+    tests.testNamePicker()
+    
     main()

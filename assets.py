@@ -31,3 +31,33 @@ def loadAnim(directory, start, end):
         return frames
     else:
         return anims[key]
+
+
+
+sounds = {}
+def loadSound(path):
+    global sounds
+    if path not in sounds:
+        sounds[path] = pygame.mixer.Sound(path)
+        return sounds[path]
+    else:
+        return sounds[path]
+
+def loadNames(path):
+    ''' 
+    Return a tuple that contains two lists:
+    list of male names     and their probabilities 
+    list of female names   and their probabilities 
+    loaded  from an external text file (space separated "name probability"). 
+    '''
+    txt_file = open(path, "r")
+    lines = txt_file.readlines()
+    names = ([],[])
+    for line in lines:
+        name = line.split("\t")[0]
+        prob = float(line.split("\t")[1])
+        names[0].append(name)
+        names[1].append(prob)
+    return names
+
+    

@@ -1,9 +1,10 @@
 from pygame.mixer import Sound
-from dock import *
+from game.dock import *
 from gui.gui import *
 from queue import Queue
 
 class Messenger(Text, DockListener):
+    ''' Class responsible form maintaining state and displaying of messages at the bottom of the UI '''
 
     def __init__(self):
         Text.__init__(self, pygame.font.Font("assets/gui/LCD14.ttf", 15))
@@ -40,7 +41,6 @@ class Messenger(Text, DockListener):
     def onDockCargoConsumed(self, dock, cargo):
         if cargo.amount == 0:
             message = cargo.name + " has depleted at " + dock.name
-            print(message)
             self.putMessage(message)
         pass
 

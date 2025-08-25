@@ -1,5 +1,5 @@
 from modes.mode import *
-from carrier import *
+from game.carrier import *
 from gui.gui import *
 from gui.animated_icon import *
 

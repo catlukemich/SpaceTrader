@@ -38,6 +38,15 @@ class Vector2:
         self.x = x
         self.y = y
 
+        return self
+    
+    def rotated(self, angle):
+        rads = math.radians(-angle)
+        x = self.x * math.cos(rads) - self.y * math.sin(rads)
+        y = self.x * math.sin(rads) + self.y * math.cos(rads)
+        result = Vector2(x, y)
+        return result
+
     def length(self):
         l = math.sqrt(self.x ** 2 + self.y ** 2)
         return l
@@ -55,6 +64,36 @@ class Vector2:
         dist = math.sqrt(dx ** 2 + dy ** 2)
         return dist
     
+    def asTuple(self):
+        return (self.x, self.y)
+
+    def distancePointToLine(self, direction, point):
+        # wektor PA
+        dx, dy = point.x - self.x, point.y - self.y
+        # iloczyn wektorowy 2D (to skalar)
+        cross = abs(dx * direction.y - dy * direction.x)
+        # norma wektora kierunkowego
+        norm_v = math.hypot(direction.x, direction.y)
+        return cross / norm_v
+    
+    def __str__(self):
+        return f"vec2 {self.x}, {self.y}"
+
+
+
+def map_value(x, in_min, in_max, out_min, out_max):
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
+
+def clamp(value, min, max):
+    if value < min:
+        value = min
+    if value > max:
+        value = max
+    return value
+
+
+
+
 if __name__ == "__main__":
     v1 = Vector2(0,1)
     v1.rotate(45)

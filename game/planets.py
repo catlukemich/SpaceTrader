@@ -1,7 +1,7 @@
 from view.sprite import *
 from view.animated_sprite import *
 from mathutils import *
-from dock import *
+from game.dock import *
 from cargo import *
 
 def createPlanetsWithDocks():
@@ -177,10 +177,6 @@ def createPlanetsWithDocks():
     docks.append(dock)
 
 
-
-
-
-
 def createAsteroids():
     for i in range(0, 40):
         asteroid = Asteroid()
@@ -189,13 +185,14 @@ def createAsteroids():
 
 
 class Asteroid(AnimatedSprite):
+    
     def __init__(self):
         variation = random.randint(1, 3)
         directory = "assets/asteroid" + str(variation)
         frames = assets.loadAnim(directory, 0, 99)
         AnimatedSprite.__init__(self, 4, frames)
 
-        a, b = -100000, 100000
+        a, b = -100, 100
         rand_x = random.randint(a, b)
         rand_y = random.randint(a, b)
         pos = Vector2(rand_x, rand_y)
@@ -209,13 +206,22 @@ class Asteroid(AnimatedSprite):
         self.timeout = t
         self.ticks = 0
 
+        self.health = 100 + random.randint(0,20)
+    
+
+    def takeDamage(self, amount):
+        self.health -= amount
+        if self.health < 0:
+            globvars.scene.removeSprite(self)
+            if self in globvars.asteroids:
+                globvars.asteroids.remove(self)
+
     def update(self, clock):
         AnimatedSprite.update(self, clock)
         self.position = self.position + self.vector
         self.ticks += 1
         if self.ticks % 60 == 0:
             self.timeout -= 1
-
         if self.timeout == 0:
             globvars.scene.removeSprite(self)
             globvars.asteroids.remove(self)

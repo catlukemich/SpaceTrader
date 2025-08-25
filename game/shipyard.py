@@ -7,6 +7,8 @@ class Shipyard(SpriteGroup):
     def __init__(self):
         SpriteGroup.__init__(self)
 
+        self.name = "Shipyard" # Field required by FlyHud to display guide name.
+
         frames = assets.loadAnim("assets/shipyard/station", 0, 9)
         self.station = AnimatedSprite(6, frames)
         self.addSprite(self.station)

@@ -1,3 +1,4 @@
+from gui.speed_gauge import SpeedGauge
 from modes.dock_mode import *
 from modes.fly_mode import *
 from modes.shipyard_mode import *
@@ -18,11 +19,11 @@ def main():
 
     pygame.display.set_caption("Space Trader")
 
-    globvars.surface    = pygame.display.set_mode((800, 800))
+    globvars.surface    = pygame.display.set_mode((1000, 1000))
     pygame.display.set_icon(assets.loadImage("assets/icon.png"))
     globvars.gui        = Gui()
     globvars.scene      = Scene()
-    globvars.viewport   = Viewport(800, 800);
+    globvars.viewport   = Viewport(globvars.surface.get_width(), globvars.surface.get_height());
 
     start_ship = SmallCarrier()
     start_ship.setPosition(Vector2(-3001, -3001))
@@ -49,6 +50,11 @@ def main():
     credits_gauge       = CreditsGauge()
     credits_gauge.setPosition(20, 770)
     globvars.gui.addWidget(credits_gauge)
+
+    speed_gauge = SpeedGauge()
+    speed_gauge.setPosition(20, 790)
+    globvars.gui.addWidget(speed_gauge)
+
     globvars.shipyard_menu = ShipyardMenu()
     globvars.cargo_panel = CargoPanel()
     globvars.messenger = Messenger()
@@ -64,7 +70,7 @@ def main():
     while not done:
         # Event dispatching:
         for event in pygame.event.get():
-            if event.type == QUIT:
+            if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
                 done = True
             else:
                 consumed = globvars.gui.onEvent(event)

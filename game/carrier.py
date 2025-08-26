@@ -8,6 +8,8 @@ class Carrier(Sprite):
 
     def __init__(self, capacity = 500):
         Sprite.__init__(self, None)
+        self.min_speed = -4
+        self.max_speed = 40
         self.layer = 2
         self.weapon = Lasers([Vector2(-20,-10), Vector2(20,-10)]) # Has two lasers
         self.capacity = capacity
@@ -64,12 +66,18 @@ class Carrier(Sprite):
 
     def getRotation(self):
         return self.rotation
+    
+    def getHeading(self):
+        ''' Get the vector the carrier is heading towards '''
+        rot = self.getRotation()
+        fwd_vec = Vector2(0, -1)
+        fwd_vec.rotate(rot)
+        fwd_vec.normalize()
+        return fwd_vec
 
     def setSpeed(self, speed):
-        if speed >= -10:
-            self.speed = speed
-        else:
-            self.speed = 0
+        self.speed = clamp(speed, self.min_speed, self.max_speed)
+        
 
     def getSpeed(self):
         return self.speed

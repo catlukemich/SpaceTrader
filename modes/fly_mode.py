@@ -1,11 +1,12 @@
 from pygame.mixer import Sound
+from gui.fly_hud import FlyHud
 from modes.mode import *
 from pygame.locals import *
 import globvars
 import pygame
 from mathutils import *
 from main      import *
-from modes.fly_hud import *
+from gui.fly_hud import *
 
 ENTERING_PROXIMITY = 40 # The distance below which an object can be entered
 

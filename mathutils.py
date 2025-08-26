@@ -50,6 +50,10 @@ class Vector2:
     def length(self):
         l = math.sqrt(self.x ** 2 + self.y ** 2)
         return l
+    
+    def dot(self, other):
+        ''' Calculate the dot product against other vector '''
+        return self.x * other.x + self.y * other.y
 
     def normalize(self):
         l = self.length()
